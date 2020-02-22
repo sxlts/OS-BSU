@@ -1,5 +1,8 @@
-# build folder
+# build
 build/
+**/*.exe
+**/*.gch
+**/*.out
 
 # Vim temporary files
 .*.swp
