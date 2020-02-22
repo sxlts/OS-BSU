@@ -3,7 +3,8 @@
 bool CALL(char *cmd){
 	STARTUPINFO info = {sizeof(info)};
 	PROCESS_INFORMATION processInfo;
-	CreateProcess(
+
+	if (CreateProcess(
 		NULL,
 		cmd,
 		NULL,
@@ -14,8 +15,11 @@ bool CALL(char *cmd){
 		NULL,
 		&info,
 		&processInfo
-	);
+	))
 	WaitForSingleObject(processInfo.hProcess, INFINITE);
+	else return false;
+
+	return true;
 }
 
 int main(int argc, char** argv){
@@ -27,7 +31,7 @@ int main(int argc, char** argv){
 	printf("Enter binary file name: ");
 	scanf("%49s", BinaryFileName);
 	printf("Enter line number: ");
-	scanf("%d", LineNumber);
+	scanf("%d", &LineNumber);
 	
 	char cmd[100];
 	sprintf(
@@ -36,12 +40,12 @@ int main(int argc, char** argv){
 		BinaryFileName,
 		LineNumber
 	);
-	CALL(cmd);
+	if(!CALL(cmd)) printf("FATAL ERROR!\n");
 
 	printf("Enter report file name: ");
 	scanf("%49s", FileName);
 	printf("Enter payment value: ");
-	scanf("%lf", payment);
+	scanf("%lf", &payment);
 
 	sprintf(
 		cmd,
@@ -50,7 +54,7 @@ int main(int argc, char** argv){
 		FileName,
 		payment
 	);
-	CALL(cmd);
+	if(!CALL(cmd)) printf("FATAL ERROR!\n");
 
 	printf("Finished!\n");
 	return 0;
