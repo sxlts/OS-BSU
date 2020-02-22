@@ -9,4 +9,4 @@ typedef struct
 	int num;
 	char name[50];
 	double hours;
-}emp;
+}EMPLOYEE;
