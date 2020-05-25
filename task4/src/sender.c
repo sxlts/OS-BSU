@@ -1,7 +1,7 @@
 #include "util.h"
 
 int main(int argc, char** argv){
-    	char EventName[50];
+    char EventName[50];
 	hfile = CreateFile(
 		argv[1],
 		GENERIC_WRITE | GENERIC_READ,
@@ -20,7 +20,7 @@ int main(int argc, char** argv){
 	hReady[0] = OpenEvent(EVENT_ALL_ACCESS, TRUE, "Receiver");
 	hReady[1] = OpenEvent(EVENT_ALL_ACCESS, TRUE, "CloseProcess");
 
-    	getSize();
+    getSize();
 	getHead();
 	getTail();
 
@@ -31,7 +31,7 @@ int main(int argc, char** argv){
 	while(true){
 		WaitForSingleObject(hmutex, INFINITE);
 
-		printf("(sender %s) Give message (exit! to close process)\n", argv[2]);
+		printf("Give message (exit! to close process)\n", argv[2]);
 		scanf("%s", message);
 
 		if(strcmp("exit!", message) == 0) {
@@ -40,7 +40,7 @@ int main(int argc, char** argv){
 		}
         
 		if(!WriteMsg()){
-			printf("(sender %s) [buffer is full!]\n", argv[2]);
+			printf("[buffer is full!]\n", argv[2]);
 			ResetEvent(hReady[0]);
 			ReleaseMutex(hmutex);
 			WaitForMultipleObjects(2, hReady, FALSE, INFINITE);

@@ -20,7 +20,7 @@ HANDLE CALL(char *cmd){
 				NULL,
 				NULL,
 				TRUE,
-				0,
+				CREATE_NEW_CONSOLE,
 				NULL,
 				NULL,
 				&info,
@@ -103,7 +103,7 @@ int main(int argc, char** argv){
 	while(true){
 		WaitForSingleObject(hmutex, INFINITE);
 
-		printf("(receiver) type anything to read message ([exit!] to close process)\n");
+		printf("type anything to read message ([exit!] to close process)\n");
 		char c[10];
 		scanf("%10s", c);
 		if(strcmp("exit!", c) == 0){
@@ -114,7 +114,7 @@ int main(int argc, char** argv){
 		}
 
         	if(!ReadMsg()){
-			printf("(receiver) [buffer is empty!]\n");
+			printf("[buffer is empty!]\n");
 			ResetEvent(hReady[1]);
 			ReleaseMutex(hmutex);
 			WaitForMultipleObjects(2, hReady, FALSE, INFINITE);
